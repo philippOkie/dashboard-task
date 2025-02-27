@@ -1,6 +1,6 @@
 import { Plus, Minus } from "lucide-react";
 
-function CreditManagementComponent({
+function CreditManagement({
   credits,
   creditAmount,
   handleTopUp,
@@ -115,4 +115,4 @@ function CreditManagementComponent({
   );
 }
 
-export default CreditManagementComponent;
+export default CreditManagement;

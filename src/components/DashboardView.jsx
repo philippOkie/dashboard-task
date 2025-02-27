@@ -5,8 +5,8 @@ import Header from "./Header.jsx";
 import StatsOverview from "./StatsOverview.jsx";
 import TimeLineChart from "./TimeLineChart.jsx";
 import BarChartComp from "./BarChartComp.jsx";
-import CreditManagementComponent from "./CreditManagementComponent.jsx";
-import RecentActivityComponent from "./RecentActivityComponent.jsx";
+import CreditManagement from "./CreditManagement.jsx";
+import TransactionsHistory from "./TransactionsHistory.jsx";
 
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -44,7 +44,7 @@ export const getOrganizationProjectsCredits = async () => {
   }
 };
 
-const Dashboard = () => {
+const DashboardView = () => {
   const [statistics, setStatistics] = useState(null);
   const [credits, setCredits] = useState(null);
   const [projects, setProjects] = useState(null);
@@ -61,10 +61,8 @@ const Dashboard = () => {
 
         const data = statsData?.statistics;
         setStatistics(data);
-        console.log("Im stats data: ", data);
         setCredits(creditData);
         setProjects(creditData.projects);
-        console.log("Im credit data: ", creditData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -120,14 +118,14 @@ const Dashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <CreditManagementComponent
+          <CreditManagement
             credits={credits}
             creditAmount={creditAmount}
             handleTopUp={handleTopUp}
             setCreditAmount={setCreditAmount}
           />
 
-          <RecentActivityComponent
+          <TransactionsHistory
             statistics={statistics}
             credits={credits}
             projects={projects}
@@ -138,4 +136,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardView;

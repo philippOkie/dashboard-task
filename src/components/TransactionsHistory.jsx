@@ -1,10 +1,10 @@
 import LowCreditWarning from "./LowCreditWarning";
 
-function RecentActivityComponent({ credits, projects }) {
+function TransactionsHistory({ credits, projects }) {
   return (
     <div className="gap-6">
       <div className="bg-white rounded-lg p-6 shadow">
-        <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+        <h2 className="text-lg font-semibold mb-4">Transactions History</h2>
         <div className="max-h-96 overflow-y-auto">
           <table className="w-full">
             <thead className="text-xs uppercase text-gray-700 bg-gray-50">
@@ -44,4 +44,4 @@ function RecentActivityComponent({ credits, projects }) {
   );
 }
 
-export default RecentActivityComponent;
+export default TransactionsHistory;
