@@ -19,7 +19,7 @@ const apiClient = axios.create({
   },
 });
 
-export const getOrganizationStatistics = async () => {
+const getOrganizationStatistics = async () => {
   try {
     const response = await apiClient.get("/v1/statistics/organization");
     return response.data;
@@ -32,7 +32,7 @@ export const getOrganizationStatistics = async () => {
   }
 };
 
-export const getOrganizationProjectsCredits = async () => {
+const getOrganizationProjectsCredits = async () => {
   try {
     const response = await apiClient.get("/v1/credits/organization/projects");
     return response.data;
@@ -50,8 +50,25 @@ const DashboardView = () => {
   const [credits, setCredits] = useState(null);
   const [projects, setProjects] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [creditAmount, setCreditAmount] = useState(100);
+  const [creditAmount, setCreditAmount] = useState(50);
+  const [communityId, setCommunityId] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
+
+  const fetchCredits = async () => {
+    if (!communityId) {
+      alert("Community ID is required to check a balance.");
+      return;
+    }
+
+    try {
+      const response = await apiClient.get(
+        `/v1/credits/deployment/${communityId}`
+      );
+      setCredits(response.data);
+    } catch (error) {
+      console.error("Error fetching credits:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +80,6 @@ const DashboardView = () => {
         const data = statsData?.statistics;
         setStatistics(data);
         setCredits(creditData);
-        console.log(creditData);
         setProjects(creditData.projects);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -74,25 +90,6 @@ const DashboardView = () => {
 
     fetchData();
   }, [refreshKey]);
-
-  const handleTopUp = () => {
-    setCredits({
-      ...credits,
-      currentCredits: credits.currentCredits + creditAmount,
-      totalPurchased: credits.totalPurchased + creditAmount,
-      transactionHistory: [
-        {
-          date: new Date().toISOString().split("T")[0],
-          type: "Purchase",
-          amount: creditAmount,
-          balance: credits.currentCredits + creditAmount,
-        },
-        ...credits.transactionHistory,
-      ],
-    });
-
-    alert(`Successfully added ${creditAmount} credits`);
-  };
 
   const refreshData = () => {
     setRefreshKey((prevKey) => prevKey + 1);
@@ -123,10 +120,13 @@ const DashboardView = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <CreditManagement
-            credits={credits}
             creditAmount={creditAmount}
-            handleTopUp={handleTopUp}
+            communityId={communityId}
+            credits={credits}
             setCreditAmount={setCreditAmount}
+            setCommunityId={setCommunityId}
+            onFetchCredits={fetchCredits}
+            refreshData={refreshData}
           />
 
           <TransactionsHistory
