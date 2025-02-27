@@ -53,12 +53,10 @@ function CreditManagement({
         throw new Error("Failed to add credits");
       }
 
-      alert(response.data.message);
       setCreditAmount(0);
       refreshData();
     } catch (error) {
       console.error("Error adding credits:", error);
-      alert("There was an error adding credits.");
     }
   };
 
