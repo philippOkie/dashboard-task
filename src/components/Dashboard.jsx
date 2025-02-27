@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import Header from "./Header.jsx";
 import StatsOverview from "./StatsOverview.jsx";
@@ -7,55 +8,46 @@ import GenerationTypesChart from "./GenerationTypesChart.jsx";
 import CreditManagementComponent from "./CreditManagementComponent.jsx";
 import RecentActivityComponent from "./RecentActivityComponent.jsx";
 
-const getStatisticsData = () => {
-  return {
-    totalGenerations: 1254,
-    successRate: 97.3,
-    failureRate: 2.7,
-    averageGenerationTime: 5.2,
-    monthlyStats: [
-      { month: "Jan", generations: 210, credits: 840 },
-      { month: "Feb", generations: 175, credits: 700 },
-      { month: "Mar", generations: 195, credits: 780 },
-      { month: "Apr", generations: 240, credits: 960 },
-      { month: "May", generations: 230, credits: 920 },
-      { month: "Jun", generations: 204, credits: 816 },
-    ],
-    generationTypes: [
-      { type: "Realistic", count: 423 },
-      { type: "Abstract", count: 352 },
-      { type: "Cartoon", count: 247 },
-      { type: "Landscape", count: 172 },
-      { type: "Portrait", count: 60 },
-    ],
-    recentActivity: [
-      { date: "2025-02-27", type: "Realistic", status: "Success", credits: 4 },
-      { date: "2025-02-27", type: "Portrait", status: "Success", credits: 4 },
-      { date: "2025-02-26", type: "Abstract", status: "Failed", credits: 0 },
-      { date: "2025-02-26", type: "Landscape", status: "Success", credits: 4 },
-      { date: "2025-02-25", type: "Cartoon", status: "Success", credits: 4 },
-    ],
-  };
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
+
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+  },
+});
+
+export const getOrganizationStatistics = async () => {
+  try {
+    const response = await apiClient.get("/v1/statistics/organization");
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error fetching organization statistics:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
 };
 
-const getCreditData = () => {
-  return {
-    currentCredits: 430,
-    totalPurchased: 5000,
-    totalUsed: 4570,
-    transactionHistory: [
-      { date: "2025-02-25", type: "Purchase", amount: 100, balance: 430 },
-      { date: "2025-02-20", type: "Usage", amount: -50, balance: 330 },
-      { date: "2025-02-15", type: "Purchase", amount: 200, balance: 380 },
-      { date: "2025-02-10", type: "Usage", amount: -120, balance: 180 },
-      { date: "2025-02-01", type: "Purchase", amount: 300, balance: 300 },
-    ],
-  };
+export const getOrganizationProjectsCredits = async () => {
+  try {
+    const response = await apiClient.get("/v1/credits/organization/projects");
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error fetching organization projects credits:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
 };
 
 const Dashboard = () => {
   const [statistics, setStatistics] = useState(null);
   const [credits, setCredits] = useState(null);
+  const [projects, setProjects] = useState(null);
   const [loading, setLoading] = useState(true);
   const [creditAmount, setCreditAmount] = useState(100);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -64,12 +56,14 @@ const Dashboard = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // In a real implementation, these would be API calls
-        const statsData = getStatisticsData();
-        const creditData = getCreditData();
+        const statsData = await getOrganizationStatistics();
+        const creditData = await getOrganizationProjectsCredits();
 
         setStatistics(statsData);
+        console.log("Im stats data: ", statsData);
         setCredits(creditData);
+        setProjects(creditData.projects);
+        console.log("Im credit data: ", creditData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -96,7 +90,6 @@ const Dashboard = () => {
       ],
     });
 
-    // Show success alert (in a real app would use a proper toast/notification)
     alert(`Successfully added ${creditAmount} credits`);
   };
 
@@ -133,7 +126,11 @@ const Dashboard = () => {
             setCreditAmount={setCreditAmount}
           />
 
-          <RecentActivityComponent statistics={statistics} credits={credits} />
+          <RecentActivityComponent
+            statistics={statistics}
+            credits={credits}
+            projects={projects}
+          />
         </div>
       </main>
     </div>
