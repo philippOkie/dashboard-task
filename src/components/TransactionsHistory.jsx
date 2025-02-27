@@ -1,6 +1,7 @@
 import LowCreditWarning from "./LowCreditWarning";
 
 function TransactionsHistory({ credits, projects }) {
+  console.log(projects);
   return (
     <div className="gap-6">
       <div className="bg-white rounded-lg p-6 shadow">
@@ -9,9 +10,8 @@ function TransactionsHistory({ credits, projects }) {
           <table className="w-full">
             <thead className="text-xs uppercase text-gray-700 bg-gray-50">
               <tr>
-                <th className="px-3 py-2 text-left">Project Name</th>
+                <th className="px-3 py-2 text-left">Project Id</th>
                 <th className="px-3 py-2 text-left">Date</th>
-                <th className="px-3 py-2 text-left">Type</th>
                 <th className="px-3 py-2 text-right">Credits</th>
               </tr>
             </thead>
@@ -23,11 +23,10 @@ function TransactionsHistory({ credits, projects }) {
                   )
                   .map((activity, index) => (
                     <tr key={index} className="text-sm">
-                      <td className="px-3 py-2">{project.project_name}</td>
+                      <td className="px-3 py-2">{project.project_id}</td>
                       <td className="px-3 py-2">
                         {new Date(activity.created_at).toLocaleDateString()}
                       </td>
-                      <td className="px-3 py-2">{activity.type}</td>
                       <td className="px-3 py-2 text-right">
                         {activity.amount}
                       </td>
