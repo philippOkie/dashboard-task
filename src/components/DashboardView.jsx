@@ -4,7 +4,7 @@ import axios from "axios";
 import Header from "./Header.jsx";
 import StatsOverview from "./StatsOverview.jsx";
 import TimeLineChart from "./TimeLineChart.jsx";
-import GenerationTypesChart from "./GenerationTypesChart.jsx";
+import BarChartComp from "./BarChartComp.jsx";
 import CreditManagementComponent from "./CreditManagementComponent.jsx";
 import RecentActivityComponent from "./RecentActivityComponent.jsx";
 
@@ -116,7 +116,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <TimeLineChart statistics={statistics} />
 
-          <GenerationTypesChart statistics={statistics} />
+          <BarChartComp credits={credits} />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
