@@ -9,7 +9,8 @@ function CreditManagementTable({ projects }) {
           <table className="w-full">
             <thead className="text-xs uppercase text-gray-700 bg-gray-50">
               <tr>
-                <th className="px-3 py-2 text-left">Project Id</th>
+                <th className="px-3 py-2 text-left">Project Name</th>
+                <th className="px-3 py-2 text-left">Community ID</th>
                 <th className="px-3 py-2 text-left">Shared Credits</th>
                 <th className="px-3 py-2 text-left">Video Only Credits</th>
                 <th className="px-3 py-2 text-left">Image Only Credits</th>
@@ -26,7 +27,8 @@ function CreditManagementTable({ projects }) {
 
                 return (
                   <tr key={project.project_id} className="text-sm">
-                    <td className="px-3 py-2">{project.project_id}</td>
+                    <td className="px-3 py-2">{project.project_name}</td>
+                    <td className="px-3 py-2">{project.community_id}</td>
                     <td className="px-3 py-2 text-right">{sharedCredits}</td>
                     <td className="px-3 py-2 text-right">{videoOnlyCredits}</td>
                     <td className="px-3 py-2 text-right">{imageOnlyCredits}</td>

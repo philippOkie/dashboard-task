@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function GenerationTypeChart({ statistics }) {
+function TimeLiveChart({ statistics }) {
   const { daily_generation_counts, success_rate_trend } = statistics || {};
 
   if (!daily_generation_counts || !success_rate_trend) {
@@ -66,4 +66,4 @@ function GenerationTypeChart({ statistics }) {
   );
 }
 
-export default GenerationTypeChart;
+export default TimeLiveChart;

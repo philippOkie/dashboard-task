@@ -23,7 +23,7 @@ function TransactionsHistory({ credits, projects }) {
                   )
                   .map((activity, index) => (
                     <tr key={index} className="text-sm">
-                      <td className="px-3 py-2">{project.project_id}</td>
+                      <td className="px-3 py-2">{project.community_id}</td>
                       <td className="px-3 py-2">
                         {new Date(activity.created_at).toLocaleDateString()}
                       </td>

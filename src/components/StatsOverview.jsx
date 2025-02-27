@@ -24,11 +24,6 @@ function StatsOverview({ statistics }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       <StatCard
-        title="Total Generations"
-        value={total_generations}
-        className="text-gray-900"
-      />
-      <StatCard
         title="Success Rate"
         value={`${success_rate}%`}
         className="text-green-600"
@@ -37,6 +32,11 @@ function StatsOverview({ statistics }) {
         title="Error Rate"
         value={`${error_rate}%`}
         className="text-red-600"
+      />
+      <StatCard
+        title="Total Generations"
+        value={total_generations}
+        className="text-gray-900"
       />
       <StatCard
         title="Average Generation Time"
