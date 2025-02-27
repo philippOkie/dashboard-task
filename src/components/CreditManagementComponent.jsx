@@ -6,6 +6,8 @@ function CreditManagementComponent({
   handleTopUp,
   setCreditAmount,
 }) {
+  const transactionHistory = credits?.transactionHistory || [];
+
   return (
     <div className="bg-white rounded-lg p-6 shadow">
       <h2 className="text-lg font-semibold mb-4">Credit Management</h2>
@@ -77,13 +79,13 @@ function CreditManagementComponent({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {credits.transactionHistory.map((transaction, index) => (
+            {transactionHistory.map((transaction, index) => (
               <tr key={index} className="text-sm">
-                <td className="px-3 py-2">{transaction.date}</td>
+                <td className="px-3 py-2">{transaction.created_at}</td>
                 <td className="px-3 py-2">
                   <span
                     className={
-                      transaction.type === "Purchase"
+                      transaction.type === "topup"
                         ? "text-green-600"
                         : "text-red-600"
                     }
@@ -101,7 +103,9 @@ function CreditManagementComponent({
                     {transaction.amount}
                   </span>
                 </td>
-                <td className="px-3 py-2 text-right">{transaction.balance}</td>
+                <td className="px-3 py-2 text-right">
+                  {credits.currentCredits}
+                </td>
               </tr>
             ))}
           </tbody>
