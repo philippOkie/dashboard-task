@@ -1,6 +1,6 @@
 import LowCreditWarning from "./LowCreditWarning";
 
-function RecentActivityComponent({ statistics, credits }) {
+function RecentActivityComponent({ credits, projects }) {
   return (
     <div className="gap-6">
       <div className="bg-white rounded-lg p-6 shadow">
@@ -9,31 +9,31 @@ function RecentActivityComponent({ statistics, credits }) {
           <table className="w-full">
             <thead className="text-xs uppercase text-gray-700 bg-gray-50">
               <tr>
+                <th className="px-3 py-2 text-left">Project Name</th>
                 <th className="px-3 py-2 text-left">Date</th>
                 <th className="px-3 py-2 text-left">Type</th>
-                <th className="px-3 py-2 text-left">Status</th>
                 <th className="px-3 py-2 text-right">Credits</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {statistics.recentActivity.map((activity, index) => (
-                <tr key={index} className="text-sm">
-                  <td className="px-3 py-2">{activity.date}</td>
-                  <td className="px-3 py-2">{activity.type}</td>
-                  <td className="px-3 py-2">
-                    <span
-                      className={`px-2 py-1 text-xs rounded-full ${
-                        activity.status === "Success"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {activity.status}
-                    </span>
-                  </td>
-                  <td className="px-3 py-2 text-right">{activity.credits}</td>
-                </tr>
-              ))}
+              {projects?.map((project) =>
+                project.recent_transactions
+                  .sort(
+                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                  )
+                  .map((activity, index) => (
+                    <tr key={index} className="text-sm">
+                      <td className="px-3 py-2">{project.project_name}</td>
+                      <td className="px-3 py-2">
+                        {new Date(activity.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="px-3 py-2">{activity.type}</td>
+                      <td className="px-3 py-2 text-right">
+                        {activity.amount}
+                      </td>
+                    </tr>
+                  ))
+              )}
             </tbody>
           </table>
         </div>
