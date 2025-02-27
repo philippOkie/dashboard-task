@@ -17,24 +17,19 @@ function CreditManagementTable({ projects }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {projects?.map((project) => {
-                const sharedCredits =
-                  project.credits.shared - project.total_spent.shared;
-                const videoOnlyCredits =
-                  project.credits.video_only - project.total_spent.video_only;
-                const imageOnlyCredits =
-                  project.credits.image_only - project.total_spent.image_only;
-
-                return (
-                  <tr key={project.project_id} className="text-sm">
-                    <td className="px-3 py-2">{project.project_name}</td>
-                    <td className="px-3 py-2">{project.community_id}</td>
-                    <td className="px-3 py-2 text-right">{sharedCredits}</td>
-                    <td className="px-3 py-2 text-right">{videoOnlyCredits}</td>
-                    <td className="px-3 py-2 text-right">{imageOnlyCredits}</td>
+              {projects?.map(
+                ({ project_id, project_name, community_id, credits }) => (
+                  <tr key={project_id} className="text-sm">
+                    <td className="px-3 py-2">{project_name}</td>
+                    <td className="px-3 py-2">{community_id}</td>
+                    {["shared", "video_only", "image_only"].map((type) => (
+                      <td key={type} className="px-3 py-2 text-right">
+                        {credits[type]}
+                      </td>
+                    ))}
                   </tr>
-                );
-              })}
+                )
+              )}
             </tbody>
           </table>
         </div>
