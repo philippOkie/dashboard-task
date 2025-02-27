@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Header from "./Header.jsx";
 import StatsOverview from "./StatsOverview.jsx";
-import GenerationPerMonthChart from "./GenerationPerMonthChart.jsx";
+import TimeLineChart from "./TimeLineChart.jsx";
 import GenerationTypesChart from "./GenerationTypesChart.jsx";
 import CreditManagementComponent from "./CreditManagementComponent.jsx";
 import RecentActivityComponent from "./RecentActivityComponent.jsx";
@@ -59,8 +59,9 @@ const Dashboard = () => {
         const statsData = await getOrganizationStatistics();
         const creditData = await getOrganizationProjectsCredits();
 
-        setStatistics(statsData);
-        console.log("Im stats data: ", statsData);
+        const data = statsData?.statistics;
+        setStatistics(data);
+        console.log("Im stats data: ", data);
         setCredits(creditData);
         setProjects(creditData.projects);
         console.log("Im credit data: ", creditData);
@@ -113,7 +114,7 @@ const Dashboard = () => {
         <StatsOverview statistics={statistics} credits={credits} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <GenerationPerMonthChart statistics={statistics} />
+          <TimeLineChart statistics={statistics} />
 
           <GenerationTypesChart statistics={statistics} />
         </div>
