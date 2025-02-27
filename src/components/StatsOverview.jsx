@@ -8,7 +8,11 @@ function StatsOverview({ statistics }) {
     success_rate,
     average_duration,
     generations_last_24h,
-  } = statistics.statistics;
+    generations_last_30d,
+    generations_last_7d,
+    total_deployments,
+    error_rate,
+  } = statistics;
 
   const parsedAverageDuration = parseFloat(average_duration);
   const formattedAverageDuration = !isNaN(parsedAverageDuration)
@@ -34,6 +38,13 @@ function StatsOverview({ statistics }) {
       </div>
 
       <div className="bg-white rounded-lg p-6 shadow">
+        <h3 className="text-gray-500 text-sm font-medium mb-1">Error Rate</h3>
+        <div className="text-3xl font-bold text-red-600">
+          {error_rate ?? "N/A"}%
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow">
         <h3 className="text-gray-500 text-sm font-medium mb-1">
           Average Generation Time
         </h3>
@@ -44,10 +55,37 @@ function StatsOverview({ statistics }) {
 
       <div className="bg-white rounded-lg p-6 shadow">
         <h3 className="text-gray-500 text-sm font-medium mb-1">
-          Generation for last 24 hours
+          Generations for Last 24 Hours
         </h3>
         <div className="text-3xl font-bold text-blue-600">
           {generations_last_24h ?? "N/A"}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow">
+        <h3 className="text-gray-500 text-sm font-medium mb-1">
+          Generations for Last 30 Days
+        </h3>
+        <div className="text-3xl font-bold text-blue-600">
+          {generations_last_30d ?? "N/A"}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow">
+        <h3 className="text-gray-500 text-sm font-medium mb-1">
+          Generations for Last 7 Days
+        </h3>
+        <div className="text-3xl font-bold text-blue-600">
+          {generations_last_7d ?? "N/A"}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow">
+        <h3 className="text-gray-500 text-sm font-medium mb-1">
+          Total Deployments
+        </h3>
+        <div className="text-3xl font-bold text-gray-900">
+          {total_deployments ?? "N/A"}
         </div>
       </div>
     </div>
