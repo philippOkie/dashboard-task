@@ -11,9 +11,9 @@ function CreditManagementTable({ projects }) {
               <tr>
                 <th className="px-3 py-2 text-left">Project Name</th>
                 <th className="px-3 py-2 text-left">Community ID</th>
-                <th className="px-3 py-2 text-left">Shared Credits</th>
-                <th className="px-3 py-2 text-left">Video Only Credits</th>
-                <th className="px-3 py-2 text-left">Image Only Credits</th>
+                <th className="px-3 py-2 text-right">Shared Credits</th>
+                <th className="px-3 py-2 text-right">Video Only Credits</th>
+                <th className="px-3 py-2 text-right">Image Only Credits</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
