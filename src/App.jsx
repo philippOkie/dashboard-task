@@ -1,5 +1,11 @@
+import Dashboard from "./components/Dashboard";
+
 function App() {
-  return <>hi</>;
+  return (
+    <div>
+      <Dashboard></Dashboard>
+    </div>
+  );
 }
 
 export default App;
