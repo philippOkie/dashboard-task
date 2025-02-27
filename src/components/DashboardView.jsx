@@ -7,6 +7,7 @@ import TimeLineChart from "./TimeLineChart.jsx";
 import BarChartComp from "./BarChartComp.jsx";
 import CreditManagement from "./CreditManagement.jsx";
 import TransactionsHistory from "./TransactionsHistory.jsx";
+import CreditManagementChart from "./CreditManagementChart.jsx";
 
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -62,6 +63,7 @@ const DashboardView = () => {
         const data = statsData?.statistics;
         setStatistics(data);
         setCredits(creditData);
+        console.log(creditData);
         setProjects(creditData.projects);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -116,6 +118,8 @@ const DashboardView = () => {
 
           <BarChartComp credits={credits} />
         </div>
+
+        <CreditManagementChart projects={projects} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <CreditManagement
